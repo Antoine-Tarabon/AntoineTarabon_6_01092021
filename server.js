@@ -4,15 +4,18 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const path = require('path');
 
-//Middlewares
+//Appel du fichier .env
 dotenv.config();
+//appel du body parser
 app.use(express.json());
+//mise en place du CORS policy
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
 });
+//mise en place du multer
 app.use('/images', express.static(path.join(__dirname, 'images')));
 // Connect to DB
 mongoose
@@ -33,4 +36,5 @@ const userRoutes = require('./routes/user');
 app.use('/api/auth', userRoutes);
 app.use('/api/sauces', saucesRoutes);
 
+//lancement du server
 app.listen(process.env.APP_PORT, () => console.log('Server Up and Running'));
